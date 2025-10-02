@@ -1,5 +1,7 @@
 <?php 
 
+namespace Ralfaro\UserManagement;
+
 class Conn{
     public function getConn() {
         try {
