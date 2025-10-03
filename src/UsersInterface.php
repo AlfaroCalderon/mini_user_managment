@@ -1,7 +1,7 @@
 <?php 
 namespace Ralfaro\UserManagement;
 
-interface usersInterface{
+interface UsersInterface{
     public function getId(): int;
     public function setId(int $id): void;
 
@@ -19,6 +19,9 @@ interface usersInterface{
 
     public function getBirthday(): string;
     public function setBirthday(string $birthdate): void;
+    
+    public function getPassword(): string;
+    public function setPassword(string $password): void;
 
     public function getUserRole(): string;
     public function setUserRole(string $userRole): void;

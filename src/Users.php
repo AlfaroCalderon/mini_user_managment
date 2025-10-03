@@ -2,13 +2,14 @@
 
 namespace Ralfaro\UserManagement;
 
-class Users implements usersInterface{
+class Users implements UsersInterface{
 
     private $id;
     private $firstname;
     private $lastname;
     private $email;
     private $age;
+    private $password;
     private $birthday;
     private $role;
 
@@ -53,6 +54,14 @@ class Users implements usersInterface{
         }
         public function getBirthday(): string{
             return $this->birthday;
+        }
+
+        public function setPassword(string $password): void{
+            $this->password = $password;
+        }
+
+        public function getPassword(): string{
+            return $this->password;
         }
 
         public function setUserRole(string $role): void{
