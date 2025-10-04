@@ -1,7 +1,6 @@
 <?php 
 namespace Ralfaro\UserManagement;
 use Ralfaro\UserManagement\Conn;
-session_start();
 
 class UserManagment{
    private $conn;
@@ -20,8 +19,23 @@ class UserManagment{
         $answer = $statement->fetch(mode: \PDO::FETCH_ASSOC);
         return $answer;
    }
+   public function validateEmail($email){
+      $statement = $this->conn->getConn()->prepare("SELECT * FROM users WHERE email = :email;");
+      $statement->execute([
+         ":email" => $email
+      ]);
+
+        $answer = $statement->fetch(mode: \PDO::FETCH_ASSOC);
+        return $answer;
+   }
 
     public function addUser(UsersInterface $user){
+
+      $email = $this->validateEmail($user->getEmail());
+      if($email){
+         return 'email_exists';
+      }
+
       $statement = $this->conn->getConn()->prepare("INSERT INTO users (firstname, lastname, email, age, birthdate, password, user_role) VALUES (:firstname, :lastname, :email, :age, :birthdate, :password, :user_role); ");
       $statement->execute([
          ":firstname" => $user->getFirstname(),
@@ -30,23 +44,13 @@ class UserManagment{
          ":age" => $user->getAge(),
          ":birthdate" => $user->getBirthday(),
          ":password" => $user->getPassword(),
-         ":user_role" => $user->getUserRole()
+         ":user_role" => 2
       ]);
 
       if($statement->rowCount() > 0){
-          $user_data = $this->showUser($user->getEmail(), $user->getPassword());
-
-          echo $user_data;
-          
-          $_SESSION['firstname'] = $user->getFirstname();
-          $_SESSION['lastname'] = $user->getLastname();
-          $_SESSION['email'] = $user->getEmail();
-          $_SESSION['age'] = $user->getAge();
-          $_SESSION['birthdate'] = $user->getBirthday();
-          $_SESSION['user_role'] = $user->getUserRole();
-         return 'New user has been created';
+         return 'true';
       }else{
-         return 'The user was not created';
+         return 'false';
       }
    }
 }

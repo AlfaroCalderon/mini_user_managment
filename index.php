@@ -62,10 +62,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         </form>
         
         <hr class="divider">
-        
-        <button type="button" class="btn btn-secondary">
+        <a href="signup.php" class="btn btn-secondary">
             Create New Account
-        </button>
-        
+        </a>
 </body>
 </html>
