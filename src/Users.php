@@ -4,14 +4,14 @@ namespace Ralfaro\UserManagement;
 
 class Users implements UsersInterface{
 
-    private $id;
-    private $firstname;
-    private $lastname;
-    private $email;
-    private $age;
-    private $password;
-    private $birthday;
-    private $role;
+    private int $id;
+    private string $firstname;
+    private string $lastname;
+    private string $email;
+    private int $age;
+    private string $password;
+    private string $birthday;
+    private string $role;
 
 
         public function setId(int $id): void{
