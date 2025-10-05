@@ -31,6 +31,7 @@ foreach($likedAccommodations as $fav){
     $checkedids[] = $fav['accomodation_id'];
 }
 
+require 'navbar.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
