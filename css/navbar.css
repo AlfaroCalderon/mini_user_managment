@@ -32,3 +32,18 @@
     .navbar-menu a:hover {
         background: #34495e;
     }
+
+    .signout {
+        margin-left: 0;
+        background: #e74c3c;
+        color: #ecf0f1;
+        text-decoration: none;
+        font-size: 1rem;
+        padding: 8px 16px;
+        border-radius: 4px;
+        transition: background 0.2s;
+    }
+    
+    .signout:hover {
+        background: #c0392b;
+    }

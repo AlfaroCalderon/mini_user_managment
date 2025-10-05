@@ -10,11 +10,12 @@ if(empty($user_identifier)){
 ?>
 <link rel="stylesheet" href="css/navbar.css">
 <nav class="navbar">
-    <a href="#" class="navbar-logo">MyApp</a>
+    <a href="dashboard.php" class="navbar-logo">Accommodations 🏨</a>
     <div class="navbar-menu">
-        <a href="/accommodations_dashboard.php">Accommodations Dashboards</a>
+        <a href="dashboard.php">Accommodations Dashboards</a>
         <?php if($user_role == 1): ?>
-        <a href="/accommodation_management.php">Accommodation Management</a>
+        <a href="accommodation_management.php">Accommodation Management</a>
         <?php endif; ?>
+        <a href="signout.php" class="signout">Sign Out</a>
     </div>
 </nav>
