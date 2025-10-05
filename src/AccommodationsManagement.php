@@ -5,8 +5,8 @@ use Ralfaro\UserManagement\Conn;
 class AccommodationsManagement {
     private Conn $conn;
 
-    public function __construct(Conn $conn) {
-        $this->conn = $conn;
+    public function __construct() {
+        $this->conn = new Conn();
     }
 
     public function createAccommodation(AccommodationsInterface $accommodation) {
@@ -37,8 +37,42 @@ class AccommodationsManagement {
         return $answer;
     }
 
+    public function addAccommodationToUser($user_id, $accommodation_id) {
+        $statement = $this->conn->getConn()->prepare("INSERT INTO user_selected_accommodations (user_id, accommodation_id) VALUES (:user_id, :accommodation_id); ");
+        $statement->execute([
+            ":user_id" => $user_id,
+            ":accommodation_id" => $accommodation_id
+        ]);
+
+        if($statement->rowCount() > 0){
+            return 'true';
+        }else{
+            return 'false';
+        }
+    }
+
+    public function removeAccommodationFromUser($user_id, $accommodation_id) {
+        $statement = $this->conn->getConn()->prepare("UPDATE user_selected_accommodations SET deleted = true WHERE user_id = :user_id AND accommodation_id = :accommodation_id;");
+        $statement->execute([
+            ":user_id" => $user_id,
+            ":accommodation_id" => $accommodation_id
+        ]);
+
+        if($statement->rowCount() > 0){
+            return 'true';
+        }else{
+            return 'false';
+        }
+    }
+
     public function showAllAccommodationsPerUser(int $userId) {
-        
+        $statement = $this->conn->getConn()->prepare("SELECT u.accommodation_id as accomodation_id, a.name as accomodation_name, a.type, a.description, a.img_url, a.address, a.price_per_night, a.capacity, a.available, a.created_at, u.user_id as user_id FROM user_selected_accommodations u LEFT JOIN accommodations a ON u.accommodation_id = a.accommodation_id WHERE u.user_id = :user_id AND u.deleted = false;");
+        $statement->execute([
+            ":user_id" => $userId
+        ]);
+
+        $answer = $statement->fetchAll(mode: \PDO::FETCH_ASSOC);
+        return $answer;
     }
 
     public function getAccommodationById(int $id) {
@@ -50,6 +84,7 @@ class AccommodationsManagement {
         $answer = $statement->fetch(\PDO::FETCH_ASSOC);
         return $answer;
     }
+
 
     public function getAccommodation(string $name, string $type) {
         $parameters = [];
